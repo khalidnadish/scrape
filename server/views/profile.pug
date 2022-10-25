@@ -1,0 +1,11 @@
+doctype html 
+html 
+    head 
+        title 
+    body    
+        h1 #{dataSize}  phone number
+        h1=dataSize
+        ul
+            each phone , i in  data
+                li #{phone.id}/ #{phone.phone}
+                //- li= phone.phone
