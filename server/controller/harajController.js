@@ -38,7 +38,17 @@ const createTable = (req, res) => {
 
 // insert post  ----------------------------
 async function addNewPhone(req, response) {
-  const isExist = await lib.PhoneisExsit(req.body.newPhoneData.phone);
+  const tableName=req.body.table
+  console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" )
+  console.log("tableName ....>>>>>:" ,tableName )
+  console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" )
+  const isExist = await lib.PhoneisExsit(
+    req.body.newPhoneData.phone,
+    req.body.table
+  );
+
+ 
+   
   if (isExist === undefined) {
     let reporttype = req.body.newPhoneData.reporttype;
     let authorUsername = req.body.newPhoneData.authorUsername;
@@ -50,6 +60,7 @@ async function addNewPhone(req, response) {
     let postdate = req.body.newPhoneData.postDate;
     let updatedate = req.body.newPhoneData.updateDate;
     let authorid = req.body.newPhoneData.authorId;
+    let tag = req.body.newPhoneData.tag;
     const dataArray = [
       reporttype,
       authorUsername,
@@ -61,17 +72,23 @@ async function addNewPhone(req, response) {
       postdate,
       updatedate,
       authorid,
+      tag
     ];
-    let sql = `INSERT INTO  haraj  (reporttype ,  authorUsername,  phone,  city,  postid,  pageno,  posttitle,  postdate,  updatedate,  authorid)
-   VALUES (?,?,?,?,?,?,?,?,?,?)`;
+    let sql = `INSERT INTO  ${tableName}  (reporttype ,  authorUsername,  phone,  city,  postid,  pageno,  posttitle,  postdate,  updatedate,  authorid,tag)
+   VALUES (?,?,?,?,?,?,?,?,?,?,?)`;
     const newRow = await dataBase.myDB.execute(sql, dataArray);
-    response.send("doneInsert");
+
+    response.send(`doneInsert Recode id ${newRow[0].insertId.length}  Phone No :${req.body.newPhoneData.phone} 😀`);
+    // response.render("xyz",{insertId: newRow[0].insertId.length, phoneId: req.body.newPhoneData.phone});
+
     console.log("Done Insert");
-    log(newRow[0].insertId);
+    log(newRow[0].insertId,);
+    
 
   } else {
+    response.send(`Phone No :${req.body.newPhoneData.phone} >>> Exist`);
     
-    response.send("exist phone data Data ");
+    // response.send("exist phone data Data ");
    
   }
   return

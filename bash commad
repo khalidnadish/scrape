@@ -1,0 +1,10 @@
+to get the proces
+ps aux | grep node
+
+
+
+cmd kill node.execute
+---   taskkill /F /IM node.exe
+
+Create a new    Table
+ curl http://localhost:3000/lib/createTable?table=khalid

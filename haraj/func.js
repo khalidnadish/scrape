@@ -91,10 +91,22 @@ const loopInarray = (array) => {
   }
 };
 
+
+
+const keypress = async () => {
+  console.log(" >>>  press key  <<<< ")
+  process.stdin.setRawMode(true)
+  return new Promise(resolve => process.stdin.once('data', () => {
+    process.stdin.setRawMode(false)
+    resolve()
+  }))
+}
+
 module.exports = {
   appendData,
   loopInarray,
   SavePhone,
   reArrangDataToJson,appendDataList,
-  logFile
+  logFile,
+  keypress
 };
